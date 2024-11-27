@@ -16,3 +16,12 @@ export const transaction = pgTable('transactions', {
     amount: real('amount'),                     
     timestamp: timestamp('timestamp').defaultNow(),
 });
+
+export const banknotes = pgTable('banknotes', {
+    id: serial('id').primaryKey(),
+    sender: text('sender'),
+    receiver: text('receiver'),
+    amount: real('amount'),
+    transactionHash: text('transaction_hash'),
+    timestamp: timestamp('timestamp').defaultNow(),
+});
