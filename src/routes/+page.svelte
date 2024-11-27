@@ -4,7 +4,7 @@
   </script>
   
   <div class="relative min-h-screen bg-gray-900 overflow-hidden">
-    <!-- Blurry blobs -->
+    <!-- Blurry goofball blobs -->
     {#each Array(5) as _, i}
       <div
         in:fade
@@ -24,7 +24,7 @@
     <div class="relative z-10">
       <nav class="container mx-auto px-6 py-8">
         <div class="flex items-center justify-between">
-          <div class="text-white text-2xl font-bold">SigmaCreeper</div>
+          <div class="text-white text-2xl font-bold">FusionBank</div>
           <div class="space-x-4">
             <a
               href="/login"
