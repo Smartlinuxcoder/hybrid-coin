@@ -1,42 +1,38 @@
-# FusionBank
+**The Sigmaest bank: FusionBank**
 
-FusionBank is a simple banking app built with SvelteKit, Drizzle ORM, and JWT-based authentication. It's designed for everyday banking tasks. Imagine you're heading to the market to buy groceries – here's how FusionBank helps:
+Welcome to FusionBank, a cool mobile banking app that combines the convenience of online transactions with the security of offline capabilities. 
+It is built with SvelteKit, Drizzle ORM, and uses Jose for authenticating.
 
-### Use Case: Going to the Market
+**The FusionBank Experience**
 
-1. **Check Your Balance**  
-   Before you head out, you open FusionBank to check your balance. You want to make sure you have enough funds to buy what you need. The app shows your current balance, which is updated in real time.
+Let's say you're heading to the market to pick up some groceries. Here's how FusionBank makes your day easier:
 
-2. **Send Money to a Friend**  
-   While browsing the aisles, you realize you need to pay your friend for a shared meal. No problem. You quickly send the agreed amount of money via the "Send Money" feature. The app asks for the recipient's username, and you confirm the amount.
+1. **Check Your Balance and Send Money**: Before you head out, check your balance and send money to a friend or family member directly from the app. It's as easy as sending a text message, and everything happens online.
+2. **Generate a Banknote**: Once you've sent the money, FusionBank generates a banknote - a receipt with a unique QR code that contains all the transaction details. This banknote acts as proof of payment and can be used offline.
+3. **Use the Banknote Offline**: Even if you're offline when you receive or generate the banknote, you can still scan the QR code later to retrieve the transaction details. This is perfect for situations where you're not connected to the internet.
+4. **Sync When Online**: When you're back online, simply scan the QR code again to validate and complete the transaction. The app will automatically sync the transaction with our servers to ensure everything is up to date.
 
-3. **Transaction Receipt with QR Code**  
-   FusionBank generates a PDF receipt for the transaction with a QR code attached. You scan the QR code later to confirm the payment with your friend.
+**Features You'll Love**
 
-4. **View Your Transaction History**  
-   After the payment, you can check your transaction history to ensure everything is in order. The app shows all recent transactions, including the one you just made to your friend.
+- **Secure Login**: FusionBank uses JWT-based authentication to ensure your account is safe and secure.
+- **Balance Management**: View and manage your balance with ease.
+- **Send Money**: Transfer money to other users with a simple and intuitive interface.
+- **Transaction History**: View all your transactions, both sent and received, for easy tracking.
+- **PDF Receipt Generation**: Get a PDF receipt with a QR code after each transaction for your records.
+- **Admin Features**: Admins can perform special tasks like adjusting balances, managing users, and reviewing transaction history through secure authentication.
 
-5. **Admin Features (Optional)**  
-   If you're the admin, you could also make changes to the system like adjusting your balance for any reason, but for the average user, everything is straightforward and intuitive.
+**Check Out the Demo**
 
-## Features
+Want to see FusionBank in action? Check out the live demo at [bank.smart.is-a.dev](https://bank.smart.is-a.dev).
 
-- **User Authentication**: Secure login and logout with JWT tokens.
-- **Balance Management**: Users can view and manage their balance.
-- **Send Money**: Transfer money to other users with a simple interface.
-- **Transaction History**: View all transactions, both sent and received.
-- **PDF Receipt Generation**: After each transaction, a PDF with a QR code is generated for tracking.
-- **Admin-Only Features**: Admin can perform special operations like depositing funds.
+**Technologies Used**
 
-## Demo
+We've built FusionBank using a combination of cool stuff, including:
 
-Check out the live demo of FusionBank at [bank.smart.is-a.dev](https://bank.smart.is-a.dev).
+- **Frontend**: SvelteKit because yes :)
+- **Backend**: SvelteKit, because its fullstack duh
+- **Database**: Postgresql with Drizzle ORM for database business
+- **Authentication**: JWT (JSON Web Tokens) for secure authentication and authorization
+- **PDF Generation**: PDFKit and QR Code for generating banknotes and other documents
 
-## Technologies Used
-
-- **Frontend**: SvelteKit
-- **Backend**: SvelteKit, duh
-- **Database**: Postgresql with Drizzle ORM
-- **Authentication**: JWT (JSON Web Tokens)
-- **PDF Generation**: PDFKit & QR Code
-
+Come and experience the Sigma power of FusionBank for yourself.
