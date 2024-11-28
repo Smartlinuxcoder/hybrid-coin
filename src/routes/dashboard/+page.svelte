@@ -13,7 +13,6 @@
 	let toastMessage = $state('');
 	let toastType = $state<'success' | 'error'>('success');
 
-	// Helper function to get auth token from cookies
 	const getAuthToken = () => {
 		if (!browser) return '';
 		const cookies = document.cookie.split('; ');
@@ -45,6 +44,14 @@
 
 			if (!res.ok) throw new Error(await res.text());
 
+			data.transactions.unshift({
+				sender: data.user.username,
+				receiver,
+				amount: parseFloat(amount),
+				timestamp: new Date().toISOString()
+			});
+			data.user.balance -= parseFloat(amount);
+
 			showToast('Money sent successfully');
 			receiver = '';
 			amount = '';
@@ -68,8 +75,15 @@
 
 			if (!res.ok) throw new Error(await res.text());
 
-			depositSuccess = true;
+			data.transactions.unshift({
+				sender: 'Deposit',
+				receiver: data.user.username,
+				amount: parseFloat(depositAmount),
+				timestamp: new Date().toISOString()
+			});
 			data.user.balance += parseFloat(depositAmount);
+
+			depositSuccess = true;
 			depositAmount = '';
 			showToast('Deposit successful');
 		} catch (error) {
@@ -125,6 +139,17 @@
 			goto('/login');
 		}
 	};
+
+	// Format date for transaction display
+	const formatDate = (timestamp: string) => {
+		return new Date(timestamp).toLocaleString('en-US', {
+			month: 'short',
+			day: 'numeric',
+			year: 'numeric',
+			hour: '2-digit',
+			minute: '2-digit'
+		});
+	};
 </script>
 
 <div class="relative min-h-screen bg-gray-900 overflow-hidden">
@@ -168,9 +193,9 @@
 		</nav>
 
 		<main class="container mx-auto px-6 pt-12">
-			<div class="grid md:grid-cols-2 gap-8">
+			<div class="grid md:grid-cols-3 gap-8">
 				<!-- Account Summary -->
-				<div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 text-center">
+				<div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 text-center md:col-span-1">
 					<h1 class="text-2xl font-bold text-white mb-4">Welcome, {data.user.username}</h1>
 					<div class="space-y-4">
 						<p class="text-gray-400">Current Balance</p>
@@ -180,7 +205,7 @@
 					</div>
 				</div>
 
-				<div class="space-y-6">
+				<div class="space-y-6 md:col-span-2">
 					<!-- Send Money Section -->
 					<div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
 						<h2 class="text-xl font-semibold text-white mb-4">Send Money</h2>
@@ -221,10 +246,9 @@
 							/>
 							<button
 								on:click={handleDeposit}
-								disabled={depositSuccess}
-								class="w-full bg-emerald-600 hover:bg-emerald-700 text-white p-3 rounded-lg transition-colors disabled:opacity-50"
+								class="w-full bg-emerald-600 hover:bg-emerald-700 text-white p-3 rounded-lg transition-colors"
 							>
-								{depositSuccess ? 'Deposit Successful' : 'Deposit'}
+								Deposit
 							</button>
 						</div>
 					</div>
@@ -249,6 +273,52 @@
 							</button>
 						</div>
 					</div>
+				</div>
+
+				<!-- Transaction History -->
+				<div class="md:col-span-full bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+					<h2 class="text-xl font-semibold text-white mb-4">Transaction History</h2>
+					{#if data.transactions.length === 0}
+						<p class="text-gray-400 text-center">No transactions yet</p>
+					{:else}
+						<div class="overflow-x-auto">
+							<table class="w-full text-left">
+								<thead class="border-b border-gray-700">
+									<tr>
+										<th class="py-3 text-gray-400">Date</th>
+										<th class="py-3 text-gray-400">Type</th>
+										<th class="py-3 text-gray-400">Details</th>
+										<th class="py-3 text-gray-400 text-right">Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+									{#each data.transactions as transaction}
+										<tr class="border-b border-gray-700 last:border-b-0">
+											<td class="py-3 text-white">
+												{formatDate(transaction.timestamp)}
+											</td>
+											<td class="py-3 text-white">
+												{transaction.sender === data.user.username ? 'Sent' : 'Received'}
+											</td>
+											<td class="py-3 text-gray-400">
+												{transaction.sender === data.user.username 
+													? `To: ${transaction.receiver}` 
+													: `From: ${transaction.sender}`}
+											</td>
+											<td class="py-3 text-right font-semibold {
+												transaction.sender === data.user.username 
+													? 'text-red-500' 
+													: 'text-green-500'
+											}">
+												{transaction.sender === data.user.username ? '-' : '+'}
+												${transaction.amount.toFixed(2)}
+											</td>
+										</tr>
+									{/each}
+								</tbody>
+							</table>
+						</div>
+					{/if}
 				</div>
 			</div>
 		</main>
