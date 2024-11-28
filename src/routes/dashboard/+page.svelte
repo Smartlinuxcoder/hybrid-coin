@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	import { browser } from '$app/environment';
+	
 
 	let { data } = $props();
 	let amount = $state('');
@@ -55,10 +56,12 @@
 			showToast('Money sent successfully');
 			receiver = '';
 			amount = '';
+			
 		} catch (error) {
 			showToast(error.message, 'error');
 		} finally {
 			sendingMoney = false;
+			invalidateAll();
 		}
 	};
 
@@ -86,6 +89,7 @@
 			depositSuccess = true;
 			depositAmount = '';
 			showToast('Deposit successful');
+			invalidateAll();
 		} catch (error) {
 			showToast(error.message, 'error');
 		}
@@ -120,6 +124,7 @@
 			showToast(error.message, 'error');
 		} finally {
 			generatingPdf = false;
+			invalidateAll();
 		}
 	};
 
@@ -255,7 +260,7 @@
 
 					<!-- Generate PDF Section -->
 					<div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
-						<h2 class="text-xl font-semibold text-white mb-4">Transaction PDF</h2>
+						<h2 class="text-xl font-semibold text-white mb-4">Print money</h2>
 						<div class="space-y-4">
 							<input
 								type="number"

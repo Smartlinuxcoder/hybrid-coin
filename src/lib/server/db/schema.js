@@ -5,7 +5,7 @@ export const user = pgTable('users', {
     username: text('username').unique(),    
 	name: text('name'),
     password: text('password'),            
-    balance: real('balance').default(0),    
+    balance: real('balance').default(100),    
 	createdAt: timestamp('created_at').defaultNow(),
 });
 
