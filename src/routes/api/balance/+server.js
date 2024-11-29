@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
-import { user } from '$lib/server/db/schema'; // Assuming user table is defined here
+import { user } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
-import { jwtVerify } from 'jose'; // To verify JWT
+import { jwtVerify } from 'jose';
 import { TextEncoder } from 'util';
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);

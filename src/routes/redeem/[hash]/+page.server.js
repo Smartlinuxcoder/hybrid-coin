@@ -8,7 +8,6 @@ import { redirect, error } from '@sveltejs/kit';
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 export const actions = {
     default: async ({ request, params, cookies }) => {
-        // Check for token cookie
         const token = cookies.get('token');
         if (!token) {
             throw redirect(302, '/login');
